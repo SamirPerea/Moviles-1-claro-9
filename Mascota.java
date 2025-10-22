@@ -1,39 +1,67 @@
-public class Mascota{
-//1 Declaro los atributos de la clase u objeto
-private String nombre;  // letras
-private String tipo;
-private int edad;
+public class Mascota {
+    // 1. Atributos
+    public String nombre;
+    private String tipo;
+    private String color;
 
-//Contructor
-public Mascota(String nombredemimascota, String tipomascota, int edadmascota){
-    this.nombre=nombredemimascota;
-    this.tipo=tipomascota;
-    this.edad=edadmascota;
-}
-
-//Creo el primer Metodo
-public void saludar(){
-    System.out.println("Hola, soy "+nombre+"!  soy de tipo"+tipo+"! y tengo "+edad+"!");
-}
-
-public class tipoanimalmascota extends Mascota {
-    private String raza;
-
-    public tipoanimalmascota ( String nombre,String tipo,int edad,String raza){
-        this.raza=raza;
-        super(nombre,tipo,edad);
+    // 2. Constructor
+    public Mascota(String nombredemimascota, String tipomascota, String colormascota) {
+        this.nombre = nombredemimascota;
+        this.tipo = tipomascota;
+        this.color = colormascota;
     }
 
-    public void definirtipoanimal(){
-        System.out.println("soy un perro");
+    // 3. Método
+    public void Saludar() {
+        System.out.println("Hola, soy " + nombre + "! y soy de tipo: " + tipo + "! y soy de color " + color + "!");
     }
-} 
 
-public static void main(String[]args){
-    Mascota Mascotahija=new Mascota("Cronos","Pastor Aleman",5 );
-    Mascotahija.saludar();
+    // 4. Clase hija interna con herencia
+    public static class TipoAnimalMascota extends Mascota {
+        private String animal;
 
-    Mascota Mimascota=new Mascota("Golden","Golden Retriver");
-    Mimascota.saludar();
-}  
+        public TipoAnimalMascota(String nombre, String tipo, String color, String raza) {
+            super(nombre, tipo, color);
+            this.animal = raza; // ← corregido
+        }
+
+        public void definirTipoAnimal() {
+            System.out.println("Soy un " + animal);
+        }
+    }
+
+    // Clase hija MascotaPolicia
+    public static class MascotaPolicia extends Mascota {
+        private String especialidad;
+
+        public MascotaPolicia(String nombre, String tipo, String color, String especialidad) {
+            super(nombre, tipo, color);
+            this.especialidad = especialidad;
+        }
+
+        @Override
+        public void Saludar() {
+            System.out.println("|Alto| soy " + nombre + ". Mi especialidad es " + especialidad);
+        }
+    }
+
+    // 5. Método principal
+    public static void main(String[] args) {
+        // Crear primer objeto
+        Mascota miMascota1 = new Mascota("Nala", "bichón maltés", "blanca");
+        miMascota1.Saludar();
+
+        // Crear segundo objeto
+        Mascota miMascota2 = new Mascota("Simba", "gato", "naranja");
+        miMascota2.Saludar();
+
+        // Usar clase hija
+        TipoAnimalMascota mascotaConRaza = new TipoAnimalMascota("Nala", "bichón maltés", "blanca", "perro");
+        mascotaConRaza.Saludar();
+        mascotaConRaza.definirTipoAnimal();
+
+        // Usar clase hija MascotaPolicia
+        MascotaPolicia perroPolicia = new MascotaPolicia("Rex", "pastor alemán", "marrón", "detección de drogas");
+        perroPolicia.Saludar();
+    }
 }
